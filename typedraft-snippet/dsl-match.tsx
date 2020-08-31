@@ -1,58 +1,18 @@
-enum Type
-{
-    Type1,
-    Type2
-}
+import { MatchDSL } from "draft-dsl-match";
 
-export function Main(value: any)
-{
-    <Match />;
-}
+type Vector1 = { x: number };
+type Vector2 = { x: number; y: number };
+type Vector3 = {
+    x: number;
+    y: number;
+    z: number;
+};
+type Vector = Vector1 | Vector2 | Vector3;
 
-function Match(value: any)
-{
-    "use match";
+const vector: Vector = { x: 1 };
+const result = Λ<string>("match")` ${vector as Vector} 
+  ${{ x: 1, y: 1, z: 1 }} -> ${"vector3"}
+  ${{ x: 2, y: 1 }} -> ${"vector2"}
+  ${{ x: 1 }} -> ${"vector1"}`;
 
-    (value: "a") =>
-    {
-        console.log("value is a");
-    };
-
-    (value: "a" | "b" | "c") =>
-    {
-        console.log("value is ...");
-    };
-
-    (value: 1) =>
-    {
-        <HandleValueIsNumber />;
-    };
-
-    (value: Type.Type1) =>
-    {
-        console.log("value is type1");
-    };
-
-    () =>
-    {
-        console.log("default here");
-    };
-}
-
-/*
-we can keep case in Match clear and concise in this way:
-*/
-function HandleValueIsNumber()
-{
-    console.log("value is 1");
-    console.log("value is 1");
-    console.log("value is 1");
-    console.log("value is 1");
-    console.log("value is 1");
-    console.log("value is 1");
-    console.log("value is 1");
-    console.log("value is 1");
-    console.log("value is 1");
-    console.log("value is 1");
-    console.log("value is 1");
-}
+console.log(result);
